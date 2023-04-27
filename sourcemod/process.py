@@ -3,8 +3,9 @@ import subprocess
 
 def exec(command: str, input: list[str]):
     buffer = ""
+    arguments = " ".join(input)
     proc = subprocess.Popen(
-        command + " ".join(input),
+        f"{command} {arguments}",
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
