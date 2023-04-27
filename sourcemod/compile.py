@@ -15,7 +15,7 @@ def get_executable():
     return f"spcomp{get_os_architecture()}" if os.name == "posix" else "spcomp.exe"
 
 
-def main(file: str):
+def main(filter_file: str):
     cwd = os.getcwd()
     if packages.get("sourcemod") == None:
         print("sourcemod is not installed.")
@@ -44,6 +44,8 @@ def main(file: str):
 
     for filename in os.listdir(input_scripting_path):
         if not filename.endswith(".sp"):
+            continue
+        if filter_file != None and filter_file != filename:
             continue
         input_path = os.path.join(input_scripting_path, filename)
         output_filename = filename.replace(".sp", ".smx")

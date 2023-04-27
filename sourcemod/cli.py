@@ -14,7 +14,7 @@ def main():
     install_parser.add_argument("package_spec", help="Name of the package to install")
 
     compile_parser = subparsers.add_parser("compile", help="Compile a plugin")
-    compile_parser.add_argument("-f", "--file", help="File name of the plugin")
+    compile_parser.add_argument("-f", "--file", help="Filename to be compiled")
 
     args = parser.parse_args()
 
