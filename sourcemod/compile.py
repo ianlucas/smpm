@@ -3,10 +3,16 @@ import os
 import sys
 import sourcemod.core as core
 import sourcemod.process as process
+import platform
+
+
+def get_os_architecture():
+    architecture = platform.architecture()[0]
+    return "64" if "64" in architecture else ""
 
 
 def get_executable():
-    return "spcomp" if os.name == "posix" else "spcomp.exe"
+    return f"spcomp{get_os_architecture()}" if os.name == "posix" else "spcomp.exe"
 
 
 def main(file: str):
@@ -23,11 +29,19 @@ def main(file: str):
         sys.exit(1)
 
     input_sm_path = os.path.join(cwd, "csgo/addons/sourcemod")
-    input_scripting_path = os.path.join(input_sm_path, "scripting")
     input_plugins_path = os.path.join(input_sm_path, "plugins")
+    input_scripting_path = os.path.join(input_sm_path, "scripting")
     input_include_path = os.path.join(input_scripting_path, "include")
+
+    if not os.path.exists(input_scripting_path):
+        print(f"please create a 'scripting' folder at {input_sm_path}.")
+
+    if not os.path.exists(input_include_path):
+        os.mkdir(input_include_path)
+
     if not os.path.exists(input_plugins_path):
         os.mkdir(input_plugins_path)
+
     for filename in os.listdir(input_scripting_path):
         if not filename.endswith(".sp"):
             continue
