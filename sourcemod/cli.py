@@ -1,7 +1,7 @@
 import argparse
-import install
-import core
-import compile
+import sourcemod.install as install
+import sourcemod.core as core
+import sourcemod.compile as compile
 
 
 def main():

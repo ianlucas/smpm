@@ -2,8 +2,8 @@ import sys
 import requests
 import os
 import re
-import core
-import packages
+import sourcemod.core as core
+import sourcemod.packages as packages
 
 
 def get_platform():

@@ -1,8 +1,8 @@
-import packages
+import sourcemod.packages as packages
 import os
 import sys
-import core
-import process
+import sourcemod.core as core
+import sourcemod.process as process
 
 
 def get_executable():
