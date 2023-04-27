@@ -49,8 +49,8 @@ def main(file: str):
         output_filename = filename.replace(".sp", ".smx")
         output_path = os.path.join(input_plugins_path, output_filename)
         run = process.exec(
-            compiler_path,
             [
+                compiler_path,
                 input_path,
                 "-o",
                 output_path,
