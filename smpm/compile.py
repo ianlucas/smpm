@@ -1,8 +1,8 @@
-import sourcemod.packages as packages
+import smpm.packages as packages
 import os
 import sys
-import sourcemod.core as core
-import sourcemod.process as process
+import smpm.core as core
+import smpm.process as process
 import platform
 
 

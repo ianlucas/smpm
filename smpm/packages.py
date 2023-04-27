@@ -1,5 +1,5 @@
 import os
-import sourcemod.core as core
+import smpm.core as core
 import json
 
 

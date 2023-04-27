@@ -2,8 +2,8 @@ import sys
 import requests
 import os
 import re
-import sourcemod.core as core
-import sourcemod.packages as packages
+import smpm.core as core
+import smpm.packages as packages
 
 
 def get_platform():
@@ -79,6 +79,9 @@ def install_sourcemod(package: dict[str, str]):
 
 
 def main(package_spec: str):
+    if package_spec == None:
+        print("TODO: try to install from sourcemod.txt")
+        sys.exit(0)
     parts = package_spec.split("@")
     if len(parts) > 2:
         print("invalid package spec")

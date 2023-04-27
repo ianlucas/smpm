@@ -1,20 +1,22 @@
 import argparse
-import sourcemod.install as install
-import sourcemod.core as core
-import sourcemod.compile as compile
+import smpm.install as install
+import smpm.core as core
+import smpm.compile as compile
 
 
 def main():
     core.setup()
 
-    parser = argparse.ArgumentParser(description="sourcemod")
+    parser = argparse.ArgumentParser(description="smpm")
     subparsers = parser.add_subparsers(title="commands", dest="command")
 
+    install_help = "Name of the package to install"
     install_parser = subparsers.add_parser("install", help="Install a package")
-    install_parser.add_argument("package_spec", help="Name of the package to install")
+    install_parser.add_argument("package_spec", nargs="?", help=install_help)
 
+    compile_help = "Filename to be compiled"
     compile_parser = subparsers.add_parser("compile", help="Compile a plugin")
-    compile_parser.add_argument("-f", "--file", help="Filename to be compiled")
+    compile_parser.add_argument("-f", "--file", help=compile_help)
 
     args = parser.parse_args()
 
