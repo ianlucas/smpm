@@ -11,8 +11,11 @@ def read():
 
 
 def get(name: str):
-    packages = read()
-    return packages[name]
+    try:
+        packages = read()
+        return packages[name]
+    except:
+        return None
 
 
 def set(name: str, version: str):
