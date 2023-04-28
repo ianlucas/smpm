@@ -7,7 +7,7 @@ pip3 install git+https://github.com/ianlucas/smpm.git
 ## Usage
 
 - `smpm install [package_spec]` - install a package
-- `smpm uninstall [package_spec]` - uninstall a package
+- `smpm uninstall <package_name>` - uninstall a package
 - `smpm compile [-f <file>]` - compiles plugins from the scripting folder
 
 ### Defining dependencies
