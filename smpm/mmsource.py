@@ -17,24 +17,24 @@ def get_release_regex():
     filename_version = rf"({version}-{git})"  # [1]
     platform = core.get_platform()
     ext = get_release_ext()
-    return rf"href='[^']+sourcemod-{filename_version}-{platform}\.{ext}'"
+    return rf"href='[^']+mmsource-{filename_version}-{platform}\.{ext}'"
 
 
 def get_release_filename(filename_version):
     platform = core.get_platform()
     ext = get_release_ext()
-    return f"sourcemod-{filename_version}-{platform}.{ext}"
+    return f"mmsource-{filename_version}-{platform}.{ext}"
 
 
 def get_release_url(url_version, filename):
-    return f"https://sm.alliedmods.net/smdrop/{url_version}/{filename}"
+    return f"https://mms.alliedmods.net/mmsdrop/{url_version}/{filename}"
 
 
 def get_latest_release():
-    response = requests.get("https://www.sourcemod.net/downloads.php?branch=stable")
+    response = requests.get("https://www.sourcemm.net/downloads.php?branch=stable")
     match = re.search(get_release_regex(), response.text)
     if not match:
-        print("unable to find latest release of sourcemod")
+        print("unable to find latest release of mmsource")
         sys.exit(1)
 
     url_version = ".".join(match.group(2).split(".")[:2])

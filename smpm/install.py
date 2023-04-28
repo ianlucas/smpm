@@ -5,17 +5,20 @@ import requests
 
 import smpm.const as const
 import smpm.core as core
+import smpm.mmsource as mmsource
 import smpm.packages as packages
 import smpm.pathlist as pathlist
 import smpm.sourcemod as sourcemod
 
 
-def install_sourcemod(package: dict[str, str]):
-    if package["version"] == "latest":
-        release = sourcemod.get_url_from_repository()
-    else:
-        release = sourcemod.get_url_from_package(package)
+def install_mmsource(package: dict[str, str]):
+    release = mmsource.get_release_from_package(package)
+    package["version"] = release["version"]
+    install(release["download_url"], release["filename"], package)
 
+
+def install_sourcemod(package: dict[str, str]):
+    release = sourcemod.get_release_from_package(package)
     package["version"] = release["version"]
     install(release["download_url"], release["filename"], package)
 
@@ -63,4 +66,6 @@ def main(package_spec: str):
         sys.exit(1)
     if package["name"] == "sourcemod":
         return install_sourcemod(package)
+    if package["name"] == "metamod":
+        return install
     print("hello")
