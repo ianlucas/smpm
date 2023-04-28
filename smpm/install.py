@@ -1,59 +1,30 @@
-import sys
-import requests
 import os
-import re
+import sys
+
+import requests
+
+import smpm.const as const
 import smpm.core as core
 import smpm.packages as packages
-
-
-def get_platform():
-    return "linux" if os.name == "posix" else "windows"
-
-
-def get_sourcemod_release_ext():
-    return "tar.gz" if os.name == "posix" else "windows"
-
-
-def get_sourcemod_latest_release_regex():
-    if os.name == "posix":
-        return r"href='[^']+sourcemod-(([^-]+)-git(\d+))-linux\.tar\.gz'"
-    return r"href='[^']+sourcemod-(([^-]+)-git(\d+))-windows\.zip'"
-
-
-# def get_sourcemod_latest_release_regex():
-#     platform = "linux" if os.name == "posix" else "windows"
-#     version_regex = r"([^-\s]+)"
-#     git_revision_regex = r"git(\d+)"
-#     return rf"href='[^']+-{version_regex}-{git_revision_regex}-{platform}\.(tar\.gz|zip)'"
-
-
-def fetch_latest_sourcemod_version():
-    response = requests.get("https://www.sourcemod.net/downloads.php?branch=stable")
-    match = re.search(get_sourcemod_latest_release_regex(), response.text)
-    if not match:
-        print("unable to find latest release of sourcemod")
-        sys.exit(1)
-    dir_version = ".".join(match.group(2).split(".")[:2])
-    return match.group(1), dir_version, f"{dir_version}.{match.group(3)}"
+import smpm.pathlist as pathlist
+import smpm.sourcemod as sourcemod
 
 
 def install_sourcemod(package: dict[str, str]):
     if package["version"] == "latest":
-        version, dir_version, pkg_version = fetch_latest_sourcemod_version()
+        release = sourcemod.get_url_from_repository()
     else:
-        pkg_version = package["version"]
-        parts = pkg_version.split(".")
-        version = ".".join(parts[:2]) + f".0-git{parts[2]}"
-        dir_version = ".".join(parts[:2])
+        release = sourcemod.get_url_from_package(package)
 
-    if packages.get("sourcemod") == pkg_version:
-        print(f"sourcemod is already installed ({pkg_version}).")
+    package["version"] = release["version"]
+    install(release["download_url"], release["filename"], package)
+
+
+def install(download_url, filename, package):
+    if packages.get(package["name"]) == package["version"]:
+        print(f"{package['name']} is already installed ({package['version']}).")
         sys.exit(0)
-
-    filename = f"sourcemod-{version}-{get_platform()}.{get_sourcemod_release_ext()}"
-    download_url = f"https://sm.alliedmods.net/smdrop/{dir_version}/{filename}"
-    dest_path = os.path.join(core.DOWNLOADS_PATH, filename)
-
+    dest_path = os.path.join(const.DOWNLOADS_PATH, filename)
     if not os.path.exists(dest_path):
         print(f"downloading {filename}...")
         response = requests.get(download_url)
@@ -68,14 +39,14 @@ def install_sourcemod(package: dict[str, str]):
             f.write(response.content)
             print("download completed.")
 
-    if core.delete_files_and_empty_dirs("sourcemod"):
+    if pathlist.delete(package["name"]):
         print("removed existing files.")
 
-    core.extract(dest_path, "sourcemod")
+    core.extract(dest_path, package["name"])
     print("extraction completed.")
 
-    packages.set("sourcemod", pkg_version)
-    print(f"installed sourcemod ({pkg_version}).")
+    packages.set(package["name"], package["version"])
+    print(f"installed {package['name']} ({package['version']}).")
 
 
 def main(package_spec: str):

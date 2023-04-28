@@ -1,12 +1,13 @@
-import os
-import smpm.core as core
 import json
+import os
+
+import smpm.const as const
 
 
 def read():
-    if not os.path.exists(core.PACKAGES_PATH):
+    if not os.path.exists(const.PACKAGES_PATH):
         return {}
-    with open(core.PACKAGES_PATH, "r") as f:
+    with open(const.PACKAGES_PATH, "r") as f:
         return json.load(f)
 
 
@@ -21,5 +22,5 @@ def get(name: str):
 def set(name: str, version: str):
     packages = read()
     packages[name] = version
-    with open(core.PACKAGES_PATH, "w") as f:
+    with open(const.PACKAGES_PATH, "w") as f:
         json.dump(packages, f)

@@ -1,9 +1,10 @@
-import smpm.packages as packages
 import os
-import sys
-import smpm.core as core
-import smpm.process as process
 import platform
+import sys
+
+import smpm.const as const
+import smpm.packages as packages
+import smpm.process as process
 
 
 def get_os_architecture():
@@ -20,7 +21,7 @@ def main(filter_file: str):
     if packages.get("sourcemod") == None:
         print("sourcemod is not installed.")
         sys.exit(1)
-    scripting_path = os.path.join(core.CSGO_PATH, "addons/sourcemod/scripting")
+    scripting_path = os.path.join(const.CSGO_PATH, "addons/sourcemod/scripting")
     include_path = os.path.join(scripting_path, "include")
     compiler_path = os.path.join(scripting_path, get_executable())
 

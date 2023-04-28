@@ -1,7 +1,8 @@
 import argparse
-import smpm.install as install
-import smpm.core as core
+
 import smpm.compile as compile
+import smpm.core as core
+import smpm.install as install
 
 
 def main():
