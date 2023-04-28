@@ -11,8 +11,8 @@ def delete(pathlist_name):
     pathlist_path = get_path(pathlist_name)
     if not os.path.exists(pathlist_path):
         return False
-    with open(pathlist_path, "r") as file:
-        paths = file.read().splitlines()
+    with open(pathlist_path, "r") as f:
+        paths = f.read().splitlines()
     dirs = []
     for path in paths:
         full_path = os.path.join(const.CSGO_PATH, path)

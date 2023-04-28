@@ -23,6 +23,28 @@ def install_sourcemod(package: dict[str, str]):
     install(release["download_url"], release["filename"], package)
 
 
+def get_package_url(package: dict[str, str]):
+    name = package["name"]
+    version = package["version"]
+    filename = f"{name}-{version}.zip"
+    return {
+        "download_url": f"https://github.com/ianlucas/smpm/raw/main/packages/{filename}",
+        "filename": filename,
+    }
+
+
+def install_from_file():
+    cwd = os.getcwd()
+    sourcemod_path = os.path.join(cwd, "sourcemod.txt")
+    if not os.path.exists(sourcemod_path):
+        print("sourcemod.txt not found.")
+        sys.exit(1)
+    with open(sourcemod_path, "r") as f:
+        packages = f.read().splitlines()
+    for package_spec in packages:
+        main(package_spec)
+
+
 def install(download_url, filename, package):
     if packages.get(package["name"]) == package["version"]:
         print(f"{package['name']} is already installed ({package['version']}).")
@@ -54,18 +76,14 @@ def install(download_url, filename, package):
 
 def main(package_spec: str):
     if package_spec == None:
-        print("TODO: try to install from sourcemod.txt")
-        sys.exit(0)
-    parts = package_spec.split("@")
-    if len(parts) > 2:
-        print("invalid package spec")
-        sys.exit(1)
-    package = {"name": parts[0], "version": "latest" if len(parts) == 1 else parts[1]}
+        return install_from_file()
+    package = core.parse_package_spec(package_spec)
     if len(package["version"]) == 0:
         print("invalid package version")
         sys.exit(1)
     if package["name"] == "sourcemod":
         return install_sourcemod(package)
-    if package["name"] == "metamod":
-        return install
-    print("hello")
+    if package["name"] == "mmsource":
+        return install_mmsource(package)
+    release = get_package_url(package)
+    install(release["download_url"], release["filename"], package)

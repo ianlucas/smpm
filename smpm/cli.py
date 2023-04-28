@@ -3,6 +3,7 @@ import argparse
 import smpm.compile as compile
 import smpm.core as core
 import smpm.install as install
+import smpm.uninstall as uninstall
 
 
 def main():
@@ -15,6 +16,10 @@ def main():
     install_parser = subparsers.add_parser("install", help="Install a package")
     install_parser.add_argument("package_spec", nargs="?", help=install_help)
 
+    uninstall_help = "Name of the package to uninstall"
+    uninstall_parser = subparsers.add_parser("uninstall", help="Uninstall a package")
+    uninstall_parser.add_argument("package_name", help=uninstall_help)
+
     compile_help = "Filename to be compiled"
     compile_parser = subparsers.add_parser("compile", help="Compile a plugin")
     compile_parser.add_argument("-f", "--file", help=compile_help)
@@ -23,6 +28,8 @@ def main():
 
     if args.command == "install":
         install.main(args.package_spec)
+    elif args.command == "uninstall":
+        uninstall.main(args.package_name)
     elif args.command == "compile":
         compile.main(args.file)
 
