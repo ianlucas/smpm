@@ -12,7 +12,7 @@ import requests
 import smpm.const as const
 import smpm.core as core
 import smpm.mmsource as mmsource
-import smpm.packages as packages
+import smpm.packages as config
 import smpm.pathlist as pathlist
 import smpm.sourcemod as sourcemod
 
@@ -44,7 +44,7 @@ def handle_post_download(package: dict[str, str], dest_path: str):
     core.extract(dest_path, package["name"])
     print("extraction completed.")
 
-    packages.set(package["name"], package["version"])
+    config.set(package["name"], package["version"])
     print(f"installed {package['name']} ({package['version']}).")
 
 
@@ -73,7 +73,7 @@ def install_from_file():
 
 
 def install(download_url, filename, package):
-    if packages.get(package["name"]) == package["version"]:
+    if config.get(package["name"]) == package["version"]:
         print(f"{package['name']} is already installed ({package['version']}).")
         sys.exit(0)
     dest_path = os.path.join(const.DOWNLOADS_PATH, filename)

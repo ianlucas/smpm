@@ -9,6 +9,9 @@ pip3 install git+https://github.com/ianlucas/smpm.git
 - `smpm install [package_spec]` - install a package
 - `smpm uninstall <package_name>` - uninstall a package
 - `smpm compile [-f <file>]` - compiles plugins from the scripting folder
+- `smpm get <key>` - gets a configuration value
+- `smpm set <key> <value>` - sets a configuration value
+  - `csgo_path` - the path packages are extracted to, default is `~/.sourcemod/csgo`
 
 ### Defining dependencies
 

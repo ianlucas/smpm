@@ -8,6 +8,7 @@ import sys
 import tarfile
 import zipfile
 
+import smpm.config as config
 import smpm.const as const
 import smpm.pathlist as pathlist
 
@@ -17,7 +18,7 @@ def get_platform():
 
 
 def extract(file_path: str, pathlist_name: str):
-    dest_path = const.CSGO_PATH
+    dest_path = config.get("csgo_path")
     if file_path.endswith(".tar.gz"):
         with tarfile.open(file_path, "r:gz") as tar:
             files = tar.getmembers()
@@ -52,3 +53,5 @@ def setup():
         os.mkdir(const.DOWNLOADS_PATH)
     if not os.path.exists(const.CSGO_PATH):
         os.mkdir(const.CSGO_PATH)
+    if config.get("csgo_path") == None:
+        config.set("csgo_path", const.CSGO_PATH)

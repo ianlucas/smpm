@@ -5,14 +5,14 @@
 
 import sys
 
-import smpm.packages as packages
+import smpm.packages as config
 import smpm.pathlist as pathlist
 
 
 def main(package_name: str):
     if pathlist.delete(package_name):
         print(f"{package_name} was uninstalled.")
-        packages.delete(package_name)
+        config.delete(package_name)
         sys.exit(1)
     else:
         print("package not found")

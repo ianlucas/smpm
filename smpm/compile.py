@@ -8,7 +8,7 @@ import platform
 import sys
 
 import smpm.const as const
-import smpm.packages as packages
+import smpm.packages as config
 import smpm.process as process
 
 
@@ -25,7 +25,7 @@ def main(filter_file: str, root_path: str):
     cwd = os.getcwd()
     if not root_path == None:
         cwd = os.path.join(cwd, root_path)
-    if packages.get("sourcemod") == None:
+    if config.get("sourcemod") == None:
         print("sourcemod is not installed.")
         sys.exit(1)
     scripting_path = os.path.join(const.CSGO_PATH, "addons/sourcemod/scripting")

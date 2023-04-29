@@ -5,6 +5,7 @@
 
 import os
 
+import smpm.config as config
 import smpm.const as const
 
 
@@ -20,7 +21,7 @@ def delete(pathlist_name):
         paths = f.read().splitlines()
     dirs = []
     for path in paths:
-        full_path = os.path.join(const.CSGO_PATH, path)
+        full_path = os.path.join(config.get("csgo_path"), path)
         if os.path.isfile(full_path):
             os.remove(full_path)
         else:
