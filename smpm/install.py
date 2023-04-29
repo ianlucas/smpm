@@ -33,7 +33,7 @@ def get_package_url(package: dict[str, str]):
     version = package["version"]
     filename = f"{name}-{version}.zip"
     return {
-        "download_url": f"https://github.com/ianlucas/smpm/raw/main/packages/{filename}",
+        "download_url": f"https://github.com/ianlucas/smpm-packages/raw/main/packages/{filename}",
         "filename": filename,
     }
 
