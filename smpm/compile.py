@@ -21,8 +21,10 @@ def get_executable():
     return f"spcomp{get_os_architecture()}" if os.name == "posix" else "spcomp.exe"
 
 
-def main(filter_file: str):
+def main(filter_file: str, root_path: str):
     cwd = os.getcwd()
+    if not root_path == None:
+        cwd = os.path.join(cwd, root_path)
     if packages.get("sourcemod") == None:
         print("sourcemod is not installed.")
         sys.exit(1)
@@ -34,7 +36,7 @@ def main(filter_file: str):
         print(compiler_path)
         sys.exit(1)
 
-    input_sm_path = os.path.join(cwd, "csgo/addons/sourcemod")
+    input_sm_path = os.path.join(cwd, "addons/sourcemod")
     input_plugins_path = os.path.join(input_sm_path, "plugins")
     input_scripting_path = os.path.join(input_sm_path, "scripting")
     input_include_path = os.path.join(input_scripting_path, "include")

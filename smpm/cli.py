@@ -25,9 +25,11 @@ def main():
     uninstall_parser = subparsers.add_parser("uninstall", help="Uninstall a package")
     uninstall_parser.add_argument("package_name", help=uninstall_help)
 
-    compile_help = "Filename to be compiled"
+    compile_f_help = "Filename to be compiled"
+    compile_r_help = "Root of the plugin directory"
     compile_parser = subparsers.add_parser("compile", help="Compile a plugin")
-    compile_parser.add_argument("-f", "--file", help=compile_help)
+    compile_parser.add_argument("-f", "--file", help=compile_f_help)
+    compile_parser.add_argument("-r", "--root", help=compile_r_help)
 
     args = parser.parse_args()
 
@@ -36,7 +38,7 @@ def main():
     elif args.command == "uninstall":
         uninstall.main(args.package_name)
     elif args.command == "compile":
-        compile.main(args.file)
+        compile.main(args.file, args.root)
 
 
 if __name__ == "__main__":
