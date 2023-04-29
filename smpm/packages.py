@@ -29,3 +29,10 @@ def set(name: str, version: str):
     packages[name] = version
     with open(const.PACKAGES_PATH, "w") as f:
         json.dump(packages, f)
+
+
+def delete(name: str):
+    packages = read()
+    del packages[name]
+    with open(const.PACKAGES_PATH, "w") as f:
+        json.dump(packages, f)
