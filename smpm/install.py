@@ -75,7 +75,7 @@ def install_from_file():
 def install(download_url, filename, package):
     if config.get(package["name"]) == package["version"]:
         print(f"{package['name']} is already installed ({package['version']}).")
-        sys.exit(0)
+        return
     dest_path = os.path.join(const.DOWNLOADS_PATH, filename)
     if not os.path.exists(dest_path):
         print(f"downloading {filename}...")
